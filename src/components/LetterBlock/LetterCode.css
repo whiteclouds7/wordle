@@ -1,0 +1,16 @@
+.Block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    align-content: center;
+    background-color: pink;
+    border: 1px solid #282c34;
+    margin: 5px;
+}
+
+.Letter {
+    font-size: 48px;
+    color: #fff;
+}
