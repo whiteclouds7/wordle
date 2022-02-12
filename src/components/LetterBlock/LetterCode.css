@@ -5,12 +5,28 @@
     width: 100px;
     height: 100px;
     align-content: center;
-    background-color: pink;
     border: 1px solid #282c34;
     margin: 5px;
+    color: #fff;
 }
 
 .Letter {
     font-size: 48px;
-    color: #fff;
+}
+
+.green {
+    background-color: seagreen;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.grey {
+    background-color: grey;
+}
+
+.white {
+    background-color: whitesmoke;
+    color: #000;
 }

@@ -5,19 +5,20 @@ import BlockLine from "../BlockLine/BlockLine";
 const LENGTH = 5;
 const WORD = "HELLO";
 enum MATCHES {
-  GREEN,
-  ORANGE,
-  RED,
+  GREEN = "green",
+  ORANGE = "orange",
+  GREY = "grey",
+  WHITE = "white",
 }
 const matchWord = (word: string[]): MATCHES[] => {
-  const matches: number[] = [];
+  const matches: MATCHES[] = [];
   word.map((w, i) => {
     if (WORD.at(i) === w) {
       matches[i] = MATCHES.GREEN;
     } else if (WORD.includes(w)) {
       matches[i] = MATCHES.ORANGE;
     } else {
-      matches[i] = MATCHES.RED;
+      matches[i] = MATCHES.GREY;
     }
   });
   return matches;
@@ -25,14 +26,11 @@ const matchWord = (word: string[]): MATCHES[] => {
 
 interface enteredWord {
   letters: string[];
-  matches?: MATCHES[];
+  matches: MATCHES[];
 }
 
 const Wordle = (): JSX.Element => {
   const [curLetters, setCurLetters] = useState<string[]>([]); // TODO try out with useRef
-  const handleNewLetter = (letter: string) => {
-    setCurLetters((curLetters) => [...curLetters, letter.toUpperCase()]);
-  };
   const [oldMatches, setOldMatches] = useState<enteredWord[]>([]);
 
   useEffect(() => {
@@ -41,14 +39,16 @@ const Wordle = (): JSX.Element => {
         { letters: curLetters, matches: matchWord(curLetters) },
         ...oldMatches,
       ]);
-      setCurLetters((curLetters) => []);
+      setCurLetters(() => []);
     };
+
+    const handleNewLetter = (letter: string) => {
+      setCurLetters((curLetters) => [...curLetters, letter.toUpperCase()]);
+    };
+
     const keypress = (event: KeyboardEvent) => {
       const key = event.key;
-      console.log(key);
-      console.log(curLetters);
       if (event.key === "Enter") {
-        console.log(curLetters.length);
         if (curLetters.length === LENGTH) {
           matchInput();
         }
@@ -66,7 +66,7 @@ const Wordle = (): JSX.Element => {
           handleNewLetter(key);
         } else {
           matchInput();
-          setCurLetters((curLetters) => [key.toUpperCase()]);
+          setCurLetters(() => [key.toUpperCase()]);
         }
       }
     };
@@ -78,7 +78,18 @@ const Wordle = (): JSX.Element => {
   return (
     <div className="Row-block">
       {curLetters.length > 0 && curLetters.length <= 5 && (
-        <BlockLine blocks={{ letters: curLetters }} />
+        <BlockLine
+          blocks={{
+            letters: curLetters,
+            matches: [
+              MATCHES.WHITE,
+              MATCHES.WHITE,
+              MATCHES.WHITE,
+              MATCHES.WHITE,
+              MATCHES.WHITE,
+            ],
+          }}
+        />
       )}
       {oldMatches.map((oldMatch, index) => (
         <BlockLine blocks={oldMatch} key={index} />

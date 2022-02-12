@@ -8,14 +8,12 @@ interface Props {
 }
 
 const BlockLine = ({ blocks }: Props): JSX.Element => {
-  console.log(blocks);
-
   return (
     <div className="Line">
       {blocks.letters.map((letter, index) => (
         <LetterBlock
           letter={letter}
-          color={blocks.matches ? blocks.matches[index] : undefined}
+          color={blocks.matches[index]}
           key={index}
         />
       ))}
