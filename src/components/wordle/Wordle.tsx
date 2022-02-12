@@ -76,25 +76,28 @@ const Wordle = (): JSX.Element => {
   }, [curLetters]);
 
   return (
-    <div className="Row-block">
-      {curLetters.length > 0 && curLetters.length <= 5 && (
-        <BlockLine
-          blocks={{
-            letters: curLetters,
-            matches: [
-              MATCHES.WHITE,
-              MATCHES.WHITE,
-              MATCHES.WHITE,
-              MATCHES.WHITE,
-              MATCHES.WHITE,
-            ],
-          }}
-        />
-      )}
-      {oldMatches.map((oldMatch, index) => (
-        <BlockLine blocks={oldMatch} key={index} />
-      ))}
-    </div>
+    <>
+      <div className="Title">Christina's Wordle</div>
+      <div className="Row-block">
+        {curLetters.length > 0 && curLetters.length <= 5 && (
+          <BlockLine
+            blocks={{
+              letters: curLetters,
+              matches: [
+                MATCHES.WHITE,
+                MATCHES.WHITE,
+                MATCHES.WHITE,
+                MATCHES.WHITE,
+                MATCHES.WHITE,
+              ],
+            }}
+          />
+        )}
+        {oldMatches.map((oldMatch, index) => (
+          <BlockLine blocks={oldMatch} key={index} />
+        ))}
+      </div>
+    </>
   );
 };
 

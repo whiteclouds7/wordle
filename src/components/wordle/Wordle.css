@@ -1,5 +1,15 @@
+.Title {
+    font-family: "Courier New", sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 72px;
+    margin: 1.5rem;
+}
+
 .Row-block {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    font-family: "Courier New", sans-serif;
+    font-weight: bold;
 }
