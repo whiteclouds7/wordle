@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Wordle.css";
 import BlockLine from "../BlockLine/BlockLine";
+import data from "../../data/wordle-data.json"; // 15918 words
 
 const LENGTH = 5;
-const WORD = "HELLO";
+const WORD =
+  data.wordle[
+    Math.floor(new Date().setHours(0, 0, 0, 0) / 1000) % data.wordle.length
+  ].toUpperCase();
+
 enum MATCHES {
   GREEN = "green",
   ORANGE = "orange",
@@ -34,6 +39,7 @@ const Wordle = (): JSX.Element => {
   const [oldMatches, setOldMatches] = useState<enteredWord[]>([]);
 
   useEffect(() => {
+    console.log(WORD);
     const matchInput = () => {
       setOldMatches((oldMatches) => [
         { letters: curLetters, matches: matchWord(curLetters) },
