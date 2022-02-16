@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./Wordle.css";
 import BlockLine from "../BlockLine/BlockLine";
 import data from "../../data/wordle-data.json"; // 15918 words
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LENGTH = 5;
+
+// Todays Solution
 const WORD =
   data.wordle[
     Math.floor(new Date().setHours(0, 0, 0, 0) / 1000) % data.wordle.length
@@ -15,6 +19,8 @@ enum MATCHES {
   GREY = "grey",
   WHITE = "white",
 }
+
+// check every letter if it matches today's solution
 const matchWord = (word: string[]): MATCHES[] => {
   const matches: MATCHES[] = [];
   word.map((w, i) => {
@@ -29,6 +35,12 @@ const matchWord = (word: string[]): MATCHES[] => {
   return matches;
 };
 
+const checkIfValid = (word: string): boolean => {
+  console.log(word);
+  const valid = data.wordle.includes(word.toLowerCase());
+  return valid;
+};
+
 interface enteredWord {
   letters: string[];
   matches: MATCHES[];
@@ -37,15 +49,20 @@ interface enteredWord {
 const Wordle = (): JSX.Element => {
   const [curLetters, setCurLetters] = useState<string[]>([]); // TODO try out with useRef
   const [oldMatches, setOldMatches] = useState<enteredWord[]>([]);
+  const notify = () => toast.error("Invalid input! Try again");
 
   useEffect(() => {
     console.log(WORD);
     const matchInput = () => {
-      setOldMatches((oldMatches) => [
-        { letters: curLetters, matches: matchWord(curLetters) },
-        ...oldMatches,
-      ]);
-      setCurLetters(() => []);
+      if (checkIfValid(curLetters.join(""))) {
+        setOldMatches((oldMatches) => [
+          { letters: curLetters, matches: matchWord(curLetters) },
+          ...oldMatches,
+        ]);
+        setCurLetters(() => []);
+      } else {
+        notify();
+      }
     };
 
     const handleNewLetter = (letter: string) => {
@@ -84,6 +101,7 @@ const Wordle = (): JSX.Element => {
   return (
     <>
       <div className="Title">Christina's Wordle</div>
+      <ToastContainer />
       <div className="Row-block">
         {curLetters.length > 0 && curLetters.length <= 5 && (
           <BlockLine
