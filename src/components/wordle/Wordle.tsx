@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Wordle.css";
 import BlockLine from "../BlockLine/BlockLine";
 import data from "../../data/wordle-data.json"; // 15918 words
-import { ToastContainer, toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LENGTH = 5;
@@ -37,8 +37,7 @@ const matchWord = (word: string[]): MATCHES[] => {
 
 const checkIfValid = (word: string): boolean => {
   console.log(word);
-  const valid = data.wordle.includes(word.toLowerCase());
-  return valid;
+  return data.wordle.includes(word.toLowerCase());
 };
 
 interface enteredWord {
