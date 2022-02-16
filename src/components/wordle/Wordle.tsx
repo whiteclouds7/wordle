@@ -35,6 +35,7 @@ const matchWord = (word: string[]): MATCHES[] => {
   return matches;
 };
 
+// check if the given input is a valid word
 const checkIfValid = (word: string): boolean => {
   console.log(word);
   return data.wordle.includes(word.toLowerCase());
@@ -48,10 +49,9 @@ interface enteredWord {
 const Wordle = (): JSX.Element => {
   const [curLetters, setCurLetters] = useState<string[]>([]); // TODO try out with useRef
   const [oldMatches, setOldMatches] = useState<enteredWord[]>([]);
-  const notify = () => toast.error("Invalid input! Try again");
+  const notify = () => toast.error("Invalid input! Try again 🚀");
 
   useEffect(() => {
-    console.log(WORD);
     const matchInput = () => {
       if (checkIfValid(curLetters.join(""))) {
         setOldMatches((oldMatches) => [
@@ -86,10 +86,12 @@ const Wordle = (): JSX.Element => {
       ) {
         if (curLetters.length < LENGTH) {
           handleNewLetter(key);
-        } else {
-          matchInput();
-          setCurLetters(() => [key.toUpperCase()]);
         }
+        // comment out, used to check the word automatically, when a 6th letter was entered
+        // else {
+        //   matchInput();
+        //   setCurLetters(() => [key.toUpperCase()]);
+        // }
       }
     };
 
