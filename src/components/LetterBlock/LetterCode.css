@@ -30,3 +30,7 @@
     background-color: whitesmoke;
     color: #000;
 }
+
+.transparent {
+    background-color: transparent;
+}
